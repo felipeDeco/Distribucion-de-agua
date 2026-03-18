@@ -324,4 +324,333 @@ document.addEventListener('DOMContentLoaded', () => {
     const img = new Image();
     img.src = src;
   });
+
+  // === INTERACTIVE MAP & ORDERING SYSTEM ===
+  
+  // 1. Distributor Data
+  const distributors = [
+    {
+      id: 1,
+      name: "AquaPura - Sucursal Centro",
+      address: "Av. Juárez 456, Col. Centro, Guadalajara",
+      coords: [20.6744, -103.3440],
+      rating: 4.8,
+      distance: "1.2 km",
+      price: 35
+    },
+    {
+      id: 2,
+      name: "AquaPura - Providencia",
+      address: "Av. Américas 1500, Providencia, Guadalajara",
+      coords: [20.7020, -103.3770],
+      rating: 4.9,
+      distance: "3.5 km",
+      price: 38
+    },
+    {
+      id: 3,
+      name: "AquaPura - Chapalita",
+      address: "Av. Guadalupe 1200, Chapalita, Zapopan",
+      coords: [20.6650, -103.3950],
+      rating: 4.7,
+      distance: "4.8 km",
+      price: 35
+    },
+    {
+      id: 4,
+      name: "AquaPura - Tlaquepaque",
+      address: "Calle Hidalgo 200, Centro, Tlaquepaque",
+      coords: [20.6400, -103.3150],
+      rating: 4.6,
+      distance: "6.2 km",
+      price: 35
+    }
+  ];
+
+  // 2. Map State
+  let map;
+  let userMarker;
+  let truckMarker;
+  let distributorMarkers = [];
+  let selectedDistributor = null;
+  let orderQuantity = 1;
+
+  // 3. Initialize Map
+  const initMap = () => {
+    const mapElement = document.getElementById('aquaMap');
+    if (!mapElement) return;
+
+    // Use GDL coordinates as default
+    const gdlCoords = [20.6719, -103.3489];
+    
+    map = L.map('aquaMap', {
+      scrollWheelZoom: false,
+      zoomControl: false
+    }).setView(gdlCoords, 13);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+    }).addTo(map);
+
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    // Add User Marker
+    const userIcon = L.divIcon({
+      className: 'user-marker',
+      html: '<div class="user-pulse"></div><div class="user-dot"></div>',
+      iconSize: [20, 20],
+      iconAnchor: [10, 10]
+    });
+    
+    userMarker = L.marker(gdlCoords, { icon: userIcon }).addTo(map);
+    userMarker.bindPopup("<b>Tu Ubicación</b>").openPopup();
+
+    // Add Distributor Markers
+    distributors.forEach(dist => {
+      const distIcon = L.divIcon({
+        className: 'dist-marker',
+        html: '<div class="dist-icon">💧</div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 15]
+      });
+
+      const marker = L.marker(dist.coords, { icon: distIcon }).addTo(map);
+      
+      marker.on('click', () => selectDistributor(dist.id));
+      
+      const popupContent = `
+        <div class="distributor-popup">
+          <h4>${dist.name}</h4>
+          <p>${dist.address}</p>
+          <button class="popup-btn" onclick="document.dispatchEvent(new CustomEvent('selectDist', {detail: ${dist.id}}))">
+            Seleccionar
+          </button>
+        </div>
+      `;
+      marker.bindPopup(popupContent);
+      
+      distributorMarkers.push({ id: dist.id, marker });
+    });
+
+    populateDistributorList();
+  };
+
+  // 4. Populate Sidebar List
+  const populateDistributorList = () => {
+    const list = document.getElementById('distributorList');
+    if (!list) return;
+
+    list.innerHTML = distributors.map(dist => `
+      <div class="distributor-card" data-id="${dist.id}">
+        <div class="distributor-card-name">${dist.name}</div>
+        <div class="distributor-card-address">${dist.address}</div>
+        <div class="distributor-card-meta">
+          <span class="distributor-card-distance">${dist.distance}</span>
+          <span class="distributor-card-rating">★ ${dist.rating}</span>
+          <span class="distributor-card-price">$${dist.price} MXN</span>
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.distributor-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const id = parseInt(card.getAttribute('data-id'));
+        selectDistributor(id);
+      });
+    });
+  };
+
+  // 5. Select Distributor Logic
+  const selectDistributor = (id) => {
+    selectedDistributor = distributors.find(d => d.id === id);
+    if (!selectedDistributor) return;
+
+    // Update markers state
+    distributorMarkers.forEach(dm => {
+      dm.marker.getElement().classList.toggle('selected', dm.id === id);
+    });
+
+    // Zoom to marker
+    map.flyTo(selectedDistributor.coords, 14, { duration: 1.5 });
+
+    // Show order form
+    const distributorList = document.getElementById('distributorList');
+    const orderForm = document.getElementById('orderForm');
+    const selectedDistInfo = document.getElementById('selectedDistributor');
+    
+    distributorList.style.display = 'none';
+    orderForm.style.display = 'block';
+    
+    selectedDistInfo.innerHTML = `
+      <h4>📍 ${selectedDistributor.name}</h4>
+      <p>${selectedDistributor.address}</p>
+    `;
+    
+    updateOrderTotal();
+  };
+
+  // Listener for popup button
+  document.addEventListener('selectDist', (e) => selectDistributor(e.detail));
+
+  // 6. Order Form Controls
+  const qtyValue = document.getElementById('qtyValue');
+  const qtyMinus = document.getElementById('qtyMinus');
+  const qtyPlus = document.getElementById('qtyPlus');
+  const orderTotal = document.querySelector('#orderTotal strong');
+
+  const updateOrderTotal = () => {
+    if (!selectedDistributor) return;
+    qtyValue.textContent = orderQuantity;
+    orderTotal.textContent = `$${orderQuantity * selectedDistributor.price} MXN`;
+  };
+
+  qtyMinus.addEventListener('click', () => {
+    if (orderQuantity > 1) {
+      orderQuantity--;
+      updateOrderTotal();
+    }
+  });
+
+  qtyPlus.addEventListener('click', () => {
+    if (orderQuantity < 10) {
+      orderQuantity++;
+      updateOrderTotal();
+    }
+  });
+
+  document.getElementById('orderBackBtn').addEventListener('click', () => {
+    document.getElementById('distributorList').style.display = 'flex';
+    document.getElementById('orderForm').style.display = 'none';
+    selectedDistributor = null;
+  });
+
+  // 7. Tracking Simulation
+  const placeOrderBtn = document.getElementById('placeOrderBtn');
+  const trackingOverlay = document.getElementById('trackingOverlay');
+  const trackingProgressBar = document.getElementById('trackingProgressBar');
+  const etaTime = document.getElementById('etaTime');
+  let routeLine;
+  
+  placeOrderBtn.addEventListener('click', () => {
+    if (!selectedDistributor) return;
+
+    // Hide order form, show tracking
+    document.getElementById('orderPanel').style.display = 'none';
+    trackingOverlay.style.display = 'block';
+
+    startTrackingSimulation();
+  });
+
+  const startTrackingSimulation = () => {
+    const startCoords = selectedDistributor.coords;
+    const userLatLng = userMarker.getLatLng();
+    const endCoords = [userLatLng.lat, userLatLng.lng];
+    
+    // Create Route Line
+    if (routeLine) map.removeLayer(routeLine);
+    routeLine = L.polyline([startCoords, endCoords], {
+      color: '#0070cc',
+      weight: 4,
+      opacity: 0.6,
+      dashArray: '10, 10',
+      lineCap: 'round'
+    }).addTo(map);
+
+    // Create Truck Marker
+    const truckIcon = L.divIcon({
+      className: 'truck-marker',
+      html: '🚚',
+      iconSize: [36, 36],
+      iconAnchor: [18, 18]
+    });
+
+    if (truckMarker) map.removeLayer(truckMarker);
+    truckMarker = L.marker(startCoords, { icon: truckIcon, zIndexOffset: 1000 }).addTo(map);
+
+    // Fit map to show both markers
+    map.fitBounds(L.latLngBounds([startCoords, endCoords]), { padding: [50, 50] });
+
+    // Simulation Stages
+    const stages = [
+      { step: 'confirmed', progress: 10, eta: '15 min', wait: 1000 },
+      { step: 'preparing', progress: 30, eta: '12 min', wait: 2000 },
+      { step: 'onway', progress: 60, eta: '8 min', wait: 0 },
+      { step: 'delivered', progress: 100, eta: '0 min', wait: 0 }
+    ];
+
+    let currentStage = 0;
+
+    const processStage = () => {
+      const stage = stages[currentStage];
+      
+      // Update UI
+      trackingProgressBar.style.width = stage.progress + '%';
+      etaTime.textContent = stage.eta;
+      
+      const stepEl = document.getElementById(`step-${stage.step}`);
+      if (stepEl) {
+        stepEl.classList.add('completed');
+        stepEl.classList.add('active');
+        // Remove active from previous
+        if (currentStage > 0) {
+          const prevStep = document.getElementById(`step-${stages[currentStage-1].step}`);
+          if (prevStep) prevStep.classList.remove('active');
+        }
+      }
+
+      if (stage.step === 'onway') {
+        animateTruck(startCoords, endCoords, 6000, () => {
+          currentStage++;
+          processStage();
+        });
+      } else if (currentStage < stages.length - 1) {
+        setTimeout(() => {
+          currentStage++;
+          processStage();
+        }, stage.wait);
+      }
+    };
+
+    processStage();
+  };
+
+  const animateTruck = (start, end, duration, onComplete) => {
+    const startTime = performance.now();
+    
+    const move = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const lat = start[0] + (end[0] - start[0]) * progress;
+      const lng = start[1] + (end[1] - start[1]) * progress;
+      
+      truckMarker.setLatLng([lat, lng]);
+      map.panTo([lat, lng]);
+
+      if (progress < 1) {
+        requestAnimationFrame(move);
+      } else {
+        if (onComplete) onComplete();
+      }
+    };
+    
+    requestAnimationFrame(move);
+  };
+
+  document.getElementById('trackingClose').addEventListener('click', () => {
+    trackingOverlay.style.display = 'none';
+    document.getElementById('orderPanel').style.display = 'block';
+    document.getElementById('distributorList').style.display = 'flex';
+    document.getElementById('orderForm').style.display = 'none';
+    
+    if (truckMarker) map.removeLayer(truckMarker);
+    if (routeLine) map.removeLayer(routeLine);
+    
+    // Reset steps
+    document.querySelectorAll('.tracking-step').forEach(step => step.classList.remove('completed', 'active'));
+    document.getElementById('step-confirmed').classList.add('completed');
+  });
+
+  // Initialize Map on start
+  initMap();
 });
