@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // === Preload critical images ===
-  const preloadImages = ['assets/images/hero-water.png'];
+  const preloadImages = ['./assets/images/hero-water.png'];
   preloadImages.forEach(src => {
     const img = new Image();
     img.src = src;
@@ -650,6 +650,25 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.tracking-step').forEach(step => step.classList.remove('completed', 'active'));
     document.getElementById('step-confirmed').classList.add('completed');
   });
+
+  // 8. Demo Order Shortcut
+  const demoOrderBtn = document.getElementById('demoOrderBtn');
+  if (demoOrderBtn) {
+    demoOrderBtn.addEventListener('click', () => {
+      // Select a random distributor if none selected
+      if (!selectedDistributor) {
+        const randomDist = distributors[Math.floor(Math.random() * distributors.length)];
+        selectDistributor(randomDist.id);
+        
+        // Brief delay to show selection before starting delivery
+        setTimeout(() => {
+          placeOrderBtn.click();
+        }, 1200);
+      } else {
+        placeOrderBtn.click();
+      }
+    });
+  }
 
   // Initialize Map on start
   initMap();

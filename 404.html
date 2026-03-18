@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 | Página no encontrada - AquaPura</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gradient-hero);
+      text-align: center;
+      padding: var(--space-xl);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .error-page::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, rgba(0, 112, 204, 0.4), transparent 70%);
+      opacity: 0.5;
+    }
+    
+    .error-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+    }
+    
+    .error-icon {
+      font-size: 8rem;
+      margin-bottom: var(--space-lg);
+      display: block;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .error-code {
+      font-family: var(--font-heading);
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: var(--space-md);
+      background: var(--gradient-ocean);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .error-description {
+      font-size: 1.25rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: var(--space-2xl);
+      line-height: 1.6;
+    }
+    
+    .error-actions {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-md);
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div class="error-content">
+      <span class="error-icon">💧</span>
+      <h1 class="error-code">404</h1>
+      <h2>¡Ups! Esta gota se perdió</h2>
+      <p class="error-description">
+        La página que buscas no existe o ha sido movida. 
+        Pero no te preocupes, el agua purificada sigue fluyendo hacia tu hogar.
+      </p>
+      <div class="error-actions">
+        <a href="index.html" class="btn btn-primary">Volver al Inicio</a>
+        <a href="index.html#contacto" class="btn btn-secondary">Contactar Soporte</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
