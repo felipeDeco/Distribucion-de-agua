@@ -1233,7 +1233,138 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--neutral-700);
 }
 
-/* Tracking Overlay */
+/* New Order Addons */
+.order-addons {
+  margin-bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--neutral-100);
+}
+
+.addon-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--neutral-700);
+  margin-bottom: var(--space-sm);
+}
+
+.empties-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  background: var(--neutral-50);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  width: fit-content;
+}
+
+.qty-btn.sm {
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+}
+
+.qty-value.sm {
+  font-size: 1.1rem;
+  min-width: 30px;
+}
+
+.chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.chip {
+  padding: 6px 12px;
+  background: var(--neutral-100);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--neutral-600);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.chip:hover {
+  background: var(--neutral-200);
+}
+
+.chip.selected {
+  background: var(--primary-50);
+  color: var(--primary-600);
+  border-color: var(--primary-200);
+}
+
+/* Hide Leaflet Routing Machine UI */
+.leaflet-routing-container {
+  display: none !important;
+}
+
+/* Notification System */
+.notification-container {
+  position: fixed;
+  top: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  pointer-events: none;
+}
+
+.notification {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  min-width: 300px;
+  max-width: 400px;
+  border-left: 4px solid var(--primary-500);
+  transform: translateX(120%);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  pointer-events: auto;
+}
+
+.notification.show {
+  transform: translateX(0);
+}
+
+.notification-icon {
+  width: 40px;
+  height: 40px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.notification-content h5 {
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+  color: #075e54;
+}
+
+.notification-content p {
+  font-size: 0.8rem;
+  color: var(--neutral-600);
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 .tracking-overlay {
   position: absolute;
   bottom: var(--space-lg);

@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+  <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
   
   <!-- SEO & Social Media (Open Graph) -->
   <meta property="og:title" content="AquaPura | Distribución de Agua Purificada Premium">
@@ -343,13 +345,43 @@
                 <button class="qty-btn" id="qtyPlus">+</button>
               </div>
             </div>
+
+            <div class="order-addons">
+              <div class="addon-group">
+                <label>¿Devuelves envases vacíos?</label>
+                <div class="empties-control">
+                  <button class="qty-btn sm" id="emptyMinus">−</button>
+                  <span class="qty-value sm" id="emptyValue">0</span>
+                  <button class="qty-btn sm" id="emptyPlus">+</button>
+                </div>
+              </div>
+
+              <div class="addon-group">
+                <label>Frecuencia de entrega:</label>
+                <div class="chip-group" id="recurrenceGroup">
+                  <div class="chip selected" data-value="once">Única</div>
+                  <div class="chip" data-value="weekly">Semanal</div>
+                  <div class="chip" data-value="biweekly">Quincenal</div>
+                </div>
+              </div>
+
+              <div class="addon-group">
+                <label>Método de pago:</label>
+                <div class="chip-group" id="paymentGroup">
+                  <div class="chip selected" data-value="cash">💵 Efectivo</div>
+                  <div class="chip" data-value="card">💳 Tarjeta</div>
+                  <div class="chip" data-value="codi">📱 CoDi</div>
+                </div>
+              </div>
+            </div>
+
             <div class="order-total" id="orderTotal">
               <span>Total estimado:</span>
               <strong>$35 MXN</strong>
             </div>
             <button class="btn btn-primary order-btn" id="placeOrderBtn">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              🚚 Simular Pedido
+              🚚 Confirmar y Rastrear
             </button>
             <button class="btn btn-secondary order-btn-back" id="orderBackBtn">
               ← Cambiar distribuidora
@@ -652,6 +684,9 @@
   <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
+
+  <!-- Notification Container -->
+  <div id="notification-container" class="notification-container"></div>
 
   <!-- JavaScript -->
   <script src="script.js"></script>

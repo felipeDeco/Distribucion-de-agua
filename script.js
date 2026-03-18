@@ -371,9 +371,13 @@ document.addEventListener('DOMContentLoaded', () => {
   let map;
   let userMarker;
   let truckMarker;
+  let routingControl;
   let distributorMarkers = [];
   let selectedDistributor = null;
   let orderQuantity = 1;
+  let emptyReturns = 0;
+  let selectedRecurrence = 'once';
+  let selectedPayment = 'cash';
 
   // 3. Initialize Map
   const initMap = () => {
@@ -496,11 +500,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const qtyValue = document.getElementById('qtyValue');
   const qtyMinus = document.getElementById('qtyMinus');
   const qtyPlus = document.getElementById('qtyPlus');
+  
+  const emptyValue = document.getElementById('emptyValue');
+  const emptyMinus = document.getElementById('emptyMinus');
+  const emptyPlus = document.getElementById('emptyPlus');
+  
   const orderTotal = document.querySelector('#orderTotal strong');
+
+  // Chip logic
+  const setupChips = (groupId, callback) => {
+    const group = document.getElementById(groupId);
+    if (!group) return;
+    group.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        group.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+        callback(chip.getAttribute('data-value'));
+      });
+    });
+  };
+
+  setupChips('recurrenceGroup', (val) => selectedRecurrence = val);
+  setupChips('paymentGroup', (val) => selectedPayment = val);
 
   const updateOrderTotal = () => {
     if (!selectedDistributor) return;
     qtyValue.textContent = orderQuantity;
+    // Simple logic: base price - small credit for empties? 
+    // Let's just keep it simple for now but update UI
     orderTotal.textContent = `$${orderQuantity * selectedDistributor.price} MXN`;
   };
 
@@ -518,10 +545,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  emptyMinus.addEventListener('click', () => {
+    if (emptyReturns > 0) {
+      emptyReturns--;
+      emptyValue.textContent = emptyReturns;
+    }
+  });
+
+  emptyPlus.addEventListener('click', () => {
+    if (emptyReturns < orderQuantity) {
+      emptyReturns++;
+      emptyValue.textContent = emptyReturns;
+    }
+  });
+
   document.getElementById('orderBackBtn').addEventListener('click', () => {
     document.getElementById('distributorList').style.display = 'flex';
     document.getElementById('orderForm').style.display = 'none';
     selectedDistributor = null;
+    
+    // Reset additions
+    emptyReturns = 0;
+    emptyValue.textContent = 0;
   });
 
   // 7. Tracking Simulation
@@ -546,14 +591,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const userLatLng = userMarker.getLatLng();
     const endCoords = [userLatLng.lat, userLatLng.lng];
     
-    // Create Route Line
-    if (routeLine) map.removeLayer(routeLine);
-    routeLine = L.polyline([startCoords, endCoords], {
-      color: '#0070cc',
-      weight: 4,
-      opacity: 0.6,
-      dashArray: '10, 10',
-      lineCap: 'round'
+    // Clear previous routing
+    if (routingControl) map.removeControl(routingControl);
+    if (truckMarker) map.removeLayer(truckMarker);
+
+    // Create Routing
+    routingControl = L.Routing.control({
+      waypoints: [
+        L.latLng(startCoords[0], startCoords[1]),
+        L.latLng(endCoords[0], endCoords[1])
+      ],
+      routeWhileDragging: false,
+      addWaypoints: false,
+      draggableWaypoints: false,
+      fitSelectedRoutes: true,
+      lineOptions: {
+        styles: [{ color: '#0070cc', weight: 6, opacity: 0.6 }]
+      },
+      createMarker: () => null // We use our own markers
     }).addTo(map);
 
     // Create Truck Marker
@@ -564,54 +619,110 @@ document.addEventListener('DOMContentLoaded', () => {
       iconAnchor: [18, 18]
     });
 
-    if (truckMarker) map.removeLayer(truckMarker);
     truckMarker = L.marker(startCoords, { icon: truckIcon, zIndexOffset: 1000 }).addTo(map);
-
-    // Fit map to show both markers
-    map.fitBounds(L.latLngBounds([startCoords, endCoords]), { padding: [50, 50] });
 
     // Simulation Stages
     const stages = [
-      { step: 'confirmed', progress: 10, eta: '15 min', wait: 1000 },
-      { step: 'preparing', progress: 30, eta: '12 min', wait: 2000 },
+      { step: 'confirmed', progress: 10, eta: '15 min', wait: 1500 },
+      { step: 'preparing', progress: 30, eta: '12 min', wait: 2500 },
       { step: 'onway', progress: 60, eta: '8 min', wait: 0 },
       { step: 'delivered', progress: 100, eta: '0 min', wait: 0 }
     ];
 
     let currentStage = 0;
 
-    const processStage = () => {
-      const stage = stages[currentStage];
+    routingControl.on('routesfound', (e) => {
+      const routes = e.routes;
+      const route = routes[0];
+      const coordinates = route.coordinates;
       
-      // Update UI
-      trackingProgressBar.style.width = stage.progress + '%';
-      etaTime.textContent = stage.eta;
-      
-      const stepEl = document.getElementById(`step-${stage.step}`);
-      if (stepEl) {
-        stepEl.classList.add('completed');
-        stepEl.classList.add('active');
-        // Remove active from previous
-        if (currentStage > 0) {
-          const prevStep = document.getElementById(`step-${stages[currentStage-1].step}`);
-          if (prevStep) prevStep.classList.remove('active');
+      const processStage = () => {
+        const stage = stages[currentStage];
+        if (!stage) return;
+        
+        // Update UI
+        trackingProgressBar.style.width = stage.progress + '%';
+        etaTime.textContent = stage.eta;
+        
+        const stepEl = document.getElementById(`step-${stage.step}`);
+        if (stepEl) {
+          stepEl.classList.add('completed');
+          stepEl.classList.add('active');
+          if (currentStage > 0) {
+            const prevStep = document.getElementById(`step-${stages[currentStage-1].step}`);
+            if (prevStep) prevStep.classList.remove('active');
+          }
         }
+
+        if (stage.step === 'onway') {
+          showNotification('🚚 Repartidor en camino', 'Juan Pérez está cerca de tu ubicación.');
+          
+          animateTruckAlongRoute(coordinates, 8000, () => {
+            currentStage++;
+            processStage();
+          });
+        } else if (stage.step === 'delivered') {
+          showNotification('✅ ¡Pedido Entregado!', 'Gracias por elegir AquaPura. ¡Disfruta tu agua!');
+        } else if (currentStage < stages.length - 1) {
+          setTimeout(() => {
+            currentStage++;
+            processStage();
+          }, stage.wait);
+        }
+      };
+
+      processStage();
+    });
+  };
+
+  const animateTruckAlongRoute = (coordinates, duration, onComplete) => {
+    const startTime = performance.now();
+    const count = coordinates.length;
+    
+    const move = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      const index = Math.floor(progress * (count - 1));
+      const point = coordinates[index];
+      
+      if (point) {
+        truckMarker.setLatLng([point.lat, point.lng]);
+        map.panTo([point.lat, point.lng], { animate: true });
       }
 
-      if (stage.step === 'onway') {
-        animateTruck(startCoords, endCoords, 6000, () => {
-          currentStage++;
-          processStage();
-        });
-      } else if (currentStage < stages.length - 1) {
-        setTimeout(() => {
-          currentStage++;
-          processStage();
-        }, stage.wait);
+      if (progress < 1) {
+        requestAnimationFrame(move);
+      } else {
+        if (onComplete) onComplete();
       }
     };
+    
+    requestAnimationFrame(move);
+  };
 
-    processStage();
+  const showNotification = (title, message) => {
+    const container = document.getElementById('notification-container');
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.innerHTML = `
+      <div class="notification-icon">💬</div>
+      <div class="notification-content">
+        <h5>${title}</h5>
+        <p>${message}</p>
+      </div>
+    `;
+    
+    container.appendChild(notification);
+    
+    // Trigger animation
+    setTimeout(() => notification.classList.add('show'), 100);
+    
+    // Auto remove
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => notification.remove(), 500);
+    }, 5000);
   };
 
   const animateTruck = (start, end, duration, onComplete) => {
@@ -644,7 +755,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('orderForm').style.display = 'none';
     
     if (truckMarker) map.removeLayer(truckMarker);
-    if (routeLine) map.removeLayer(routeLine);
+    if (routingControl) map.removeControl(routingControl);
     
     // Reset steps
     document.querySelectorAll('.tracking-step').forEach(step => step.classList.remove('completed', 'active'));
