@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AquaPura - Servicio premium de distribución de agua purificada. Entrega a domicilio, agua de la más alta calidad con certificación de pureza garantizada.">
+  <meta name="keywords" content="agua purificada, distribución de agua, entrega a domicilio, garrafón, agua potable">
+  <meta name="author" content="AquaPura">
+  <meta name="theme-color" content="#0070cc">
+  <title>AquaPura | Distribución de Agua Purificada Premium</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230070cc'%3E%3Cpath d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z'/%3E%3C/svg%3E">
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-drop"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="#" class="navbar-logo" id="navbar-logo">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#0070cc"/>
+              <stop offset="100%" style="stop-color:#00c49a"/>
+            </linearGradient>
+          </defs>
+          <path d="M18 3L27 15C30 20 28 28 22 31C19.5 32.2 16.5 32.2 14 31C8 28 6 20 9 15L18 3Z" fill="url(#logoGrad)" opacity="0.9"/>
+          <path d="M18 8L24 16C26 19.5 24.5 24.5 21 26.5C19.4 27.3 17.6 27.3 16 26.5C12.5 24.5 11 19.5 13 16L18 8Z" fill="white" opacity="0.3"/>
+        </svg>
+        <span>AquaPura</span>
+      </a>
+      
+      <div class="nav-links" id="navLinks">
+        <a href="#inicio" id="nav-inicio">Inicio</a>
+        <a href="#servicios" id="nav-servicios">Servicios</a>
+        <a href="#nosotros" id="nav-nosotros">Nosotros</a>
+        <a href="#cobertura" id="nav-cobertura">Cobertura</a>
+        <a href="#testimonios" id="nav-testimonios">Testimonios</a>
+        <a href="#contacto" id="nav-contacto" class="nav-cta">Contactar</a>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero" id="inicio">
+    <!-- Animated Bubbles (created via JS) -->
+    <div id="bubbles-container"></div>
+
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <span>🏆 #1 en Distribución de Agua</span>
+          </div>
+          <h1>
+            Agua Pura<br>
+            <span class="highlight text-gradient">Directo a tu Hogar</span>
+          </h1>
+          <p class="hero-description">
+            Llevamos agua purificada de la más alta calidad directamente a tu puerta. 
+            Con tecnología de filtración avanzada y un servicio confiable que tu familia merece.
+          </p>
+          <div class="hero-actions">
+            <a href="#contacto" class="btn btn-primary" id="hero-cta-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Pedir Ahora
+            </a>
+            <a href="#servicios" class="btn btn-secondary" id="hero-cta-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              Ver Servicios
+            </a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-number" data-target="15000">0</span>
+              <span class="hero-stat-label">Clientes Satisfechos</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-number" data-target="99">0</span>
+              <span class="hero-stat-label">% Pureza Garantizada</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-number" data-target="12">0</span>
+              <span class="hero-stat-label">Años de Experiencia</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="hero-image-glow"></div>
+          <img src="assets/images/hero-water.png" alt="Agua cristalina pura siendo servida" loading="eager">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features section-padding" id="caracteristicas">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">¿Por qué elegirnos?</div>
+        <h2 class="section-title">Calidad que se <span class="text-gradient">nota en cada gota</span></h2>
+        <p class="section-subtitle">Nos distinguimos por ofrecer el mejor servicio de distribución de agua purificada con estándares internacionales de calidad.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card reveal reveal-delay-1" id="feature-pureza">
+          <div class="feature-icon">💧</div>
+          <h3>Pureza Certificada</h3>
+          <p>Nuestro proceso de purificación de 7 etapas garantiza agua libre de contaminantes, cumpliendo con los más altos estándares de calidad.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-2" id="feature-entrega">
+          <div class="feature-icon">🚚</div>
+          <h3>Entrega Rápida</h3>
+          <p>Servicio de entrega el mismo día en tu zona. Programa tus entregas semanales y olvídate de preocuparte por el agua.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-3" id="feature-precio">
+          <div class="feature-icon">💰</div>
+          <h3>Precio Justo</h3>
+          <p>Ofrecemos los precios más competitivos del mercado sin sacrificar la calidad. Planes familiares y empresariales disponibles.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-1" id="feature-atencion">
+          <div class="feature-icon">🎧</div>
+          <h3>Atención 24/7</h3>
+          <p>Nuestro equipo está disponible las 24 horas para atender tus dudas y solicitudes. Servicio al cliente excepcional garantizado.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-2" id="feature-ecologico">
+          <div class="feature-icon">🌿</div>
+          <h3>Eco-Friendly</h3>
+          <p>Usamos envases retornables y procesos sustentables. Cada garrafón que entregas de vuelta es un paso hacia un planeta más limpio.</p>
+        </div>
+        <div class="feature-card reveal reveal-delay-3" id="feature-app">
+          <div class="feature-icon">📱</div>
+          <h3>Pide por App</h3>
+          <p>Descarga nuestra app y pide tu agua en segundos. Rastrea tu pedido en tiempo real y gestiona tus entregas fácilmente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about section-padding" id="nosotros">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-image reveal">
+          <img src="assets/images/water-plant.png" alt="Planta de purificación de agua AquaPura">
+          <div class="about-image-badge">
+            <div class="about-image-badge-icon">🏅</div>
+            <div class="about-image-badge-text">
+              <strong>ISO 9001:2015</strong>
+              <span>Calidad Certificada</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <div class="section-eyebrow" style="justify-content: flex-start;">Sobre Nosotros</div>
+          <h2>Más de <span class="text-gradient">12 años</span> llevando pureza a tu hogar</h2>
+          <p>
+            Desde 2014, AquaPura ha sido sinónimo de confianza y calidad en la distribución de agua purificada. 
+            Nuestra planta de purificación cuenta con tecnología de punta que garantiza la más alta calidad 
+            en cada litro que entregamos.
+          </p>
+          <div class="about-features">
+            <div class="about-feature-item">
+              <div class="about-feature-check">✓</div>
+              <div>
+                <h4>Tecnología de Ósmosis Inversa</h4>
+                <p>Sistema de filtración avanzada que elimina el 99.9% de impurezas y contaminantes.</p>
+              </div>
+            </div>
+            <div class="about-feature-item">
+              <div class="about-feature-check">✓</div>
+              <div>
+                <h4>Laboratorio Propio</h4>
+                <p>Realizamos análisis diarios en nuestro laboratorio para garantizar la pureza del agua.</p>
+              </div>
+            </div>
+            <div class="about-feature-item">
+              <div class="about-feature-check">✓</div>
+              <div>
+                <h4>Flota Moderna</h4>
+                <p>Vehículos equipados con sistemas de enfriamiento para mantener la frescura del agua.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services section-padding" id="servicios">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Nuestros Servicios</div>
+        <h2 class="section-title">Soluciones de agua <span class="text-gradient">para cada necesidad</span></h2>
+        <p class="section-subtitle">Desde hogares hasta grandes empresas, tenemos el plan perfecto para ti.</p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1" id="service-hogar">
+          <div class="service-card-image">
+            <img src="assets/images/delivery-truck.png" alt="Servicio de entrega a domicilio">
+            <div class="service-card-image-overlay"></div>
+          </div>
+          <div class="service-card-body">
+            <div class="service-card-price">Desde $35 MXN</div>
+            <h3>Plan Hogar</h3>
+            <p>Ideal para familias. Recibe tus garrafones de agua purificada directamente en la puerta de tu casa.</p>
+            <ul class="service-card-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Garrafón de 20 litros
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Entrega programada
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Envase retornable incluido
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2" id="service-oficina">
+          <div class="service-card-image">
+            <img src="assets/images/water-plant.png" alt="Servicio para oficinas y empresas">
+            <div class="service-card-image-overlay"></div>
+          </div>
+          <div class="service-card-body">
+            <div class="service-card-price">Desde $299 MXN/mes</div>
+            <h3>Plan Empresarial</h3>
+            <p>Mantén a tu equipo hidratado con nuestro servicio empresarial. Incluye dispensadores y mantenimiento.</p>
+            <ul class="service-card-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Dispensador en comodato
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Entregas ilimitadas
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Mantenimiento incluido
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3" id="service-industria">
+          <div class="service-card-image">
+            <img src="assets/images/hero-water.png" alt="Servicio industrial de agua">
+            <div class="service-card-image-overlay"></div>
+          </div>
+          <div class="service-card-body">
+            <div class="service-card-price">Cotización Personalizada</div>
+            <h3>Plan Industrial</h3>
+            <p>Soluciones a gran escala para industrias que requieren agua purificada en grandes volúmenes.</p>
+            <ul class="service-card-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Pipas de agua purificada
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Análisis de calidad incluido
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                Facturación electrónica
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coverage Section -->
+  <section class="coverage section-padding" id="cobertura">
+    <div class="container">
+      <div class="coverage-content">
+        <div class="coverage-text reveal">
+          <div class="section-eyebrow" style="justify-content: flex-start; color: var(--accent-400);">Cobertura</div>
+          <h2>Llegamos a <span class="text-gradient">toda la ciudad</span> y zonas metropolitanas</h2>
+          <p>
+            Nuestra red de distribución cubre las principales colonias y municipios del área metropolitana. 
+            Consulta si llegamos a tu zona y comienza a disfrutar de agua pura hoy mismo.
+          </p>
+          <div class="coverage-stats">
+            <div class="coverage-stat">
+              <span class="coverage-stat-number" data-target="25">0</span>
+              <span class="coverage-stat-label">Zonas de Cobertura</span>
+            </div>
+            <div class="coverage-stat">
+              <span class="coverage-stat-number" data-target="50">0</span>
+              <span class="coverage-stat-label">Rutas Diarias</span>
+            </div>
+            <div class="coverage-stat">
+              <span class="coverage-stat-number" data-target="30">0</span>
+              <span class="coverage-stat-label">Vehículos en Flota</span>
+            </div>
+            <div class="coverage-stat">
+              <span class="coverage-stat-number" data-target="98">0</span>
+              <span class="coverage-stat-label">% Entregas a Tiempo</span>
+            </div>
+          </div>
+        </div>
+        <div class="coverage-visual reveal">
+          <div class="coverage-map-placeholder">
+            <!-- Animated dots representing coverage -->
+            <div class="map-dot" style="top: 20%; left: 30%; animation-delay: 0s;"></div>
+            <div class="map-dot" style="top: 35%; left: 55%; animation-delay: 0.3s;"></div>
+            <div class="map-dot" style="top: 50%; left: 40%; animation-delay: 0.6s;"></div>
+            <div class="map-dot" style="top: 65%; left: 60%; animation-delay: 0.9s;"></div>
+            <div class="map-dot" style="top: 30%; left: 70%; animation-delay: 1.2s;"></div>
+            <div class="map-dot" style="top: 45%; left: 25%; animation-delay: 0.4s;"></div>
+            <div class="map-dot" style="top: 70%; left: 45%; animation-delay: 0.7s;"></div>
+            <div class="map-dot" style="top: 25%; left: 50%; animation-delay: 1s;"></div>
+            <div class="map-dot" style="top: 55%; left: 65%; animation-delay: 0.2s;"></div>
+            <div class="map-dot" style="top: 40%; left: 35%; animation-delay: 0.8s;"></div>
+
+            <!-- Abstract city map SVG -->
+            <svg class="map-illustration" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+              <path d="M50,150 Q100,50 200,100 T350,100" stroke="rgba(255,255,255,0.12)" stroke-width="2" fill="none"/>
+              <path d="M30,200 Q150,120 250,180 T380,150" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" fill="none"/>
+              <path d="M80,250 Q180,170 280,220 T400,200" stroke="rgba(255,255,255,0.08)" stroke-width="1" fill="none"/>
+              <!-- Grid lines -->
+              <line x1="100" y1="50" x2="100" y2="280" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="200" y1="30" x2="200" y2="290" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="300" y1="40" x2="300" y2="270" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="30" y1="100" x2="380" y2="100" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+              <line x1="40" y1="200" x2="370" y2="200" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+            </svg>
+
+            <p style="color: rgba(255,255,255,0.4); margin-top: var(--space-lg); font-size: 0.9rem; text-align: center;">
+              📍 Cobertura en constante expansión
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials section-padding" id="testimonios">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Testimonios</div>
+        <h2 class="section-title">Lo que dicen <span class="text-gradient">nuestros clientes</span></h2>
+        <p class="section-subtitle">Miles de familias y empresas confían en AquaPura para su suministro de agua purificada.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal reveal-delay-1" id="testimonial-1">
+          <div class="testimonial-stars">★★★★★</div>
+          <blockquote>
+            "Desde que cambiamos a AquaPura, la calidad del agua es notablemente mejor. El servicio de entrega es puntual y el personal siempre es amable. ¡Altamente recomendado!"
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">MG</div>
+            <div class="testimonial-info">
+              <strong>María González</strong>
+              <span>Cliente desde 2019</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2" id="testimonial-2">
+          <div class="testimonial-stars">★★★★★</div>
+          <blockquote>
+            "Para nuestra empresa, tener un proveedor confiable de agua es esencial. AquaPura no solo cumple, sino que supera nuestras expectativas. El plan empresarial es excelente."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">CR</div>
+            <div class="testimonial-info">
+              <strong>Carlos Rodríguez</strong>
+              <span>Director de Operaciones, TechMX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-3" id="testimonial-3">
+          <div class="testimonial-stars">★★★★★</div>
+          <blockquote>
+            "Lo que más valoro es la transparencia. Me encanta que puedo ver los reportes de calidad del agua. Mis hijos toman agua con total confianza. El sabor es increíble."
+          </blockquote>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">AL</div>
+            <div class="testimonial-info">
+              <strong>Ana López</strong>
+              <span>Madre de familia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta section-padding">
+    <div class="container">
+      <div class="cta-content reveal">
+        <h2>¿Listo para tener <span class="text-gradient">agua pura</span> en tu hogar?</h2>
+        <p>Únete a más de 15,000 clientes satisfechos. Tu primera entrega puede ser hoy mismo.</p>
+        <div class="cta-actions">
+          <a href="#contacto" class="btn btn-white" id="cta-contact-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Solicitar Información
+          </a>
+          <a href="tel:+528001234567" class="btn btn-secondary" id="cta-call-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            Llamar Ahora
+          </a>
+        </div>
+        <div class="cta-phone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          800-123-4567
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact section-padding" id="contacto">
+    <div class="container">
+      <div class="contact-content">
+        <div class="contact-info reveal">
+          <div>
+            <div class="section-eyebrow" style="justify-content: flex-start;">Contacto</div>
+            <h2>Estamos para <span class="text-gradient">servirte</span></h2>
+            <p>¿Tienes preguntas o quieres hacer un pedido? Contáctanos por cualquiera de estos medios.</p>
+          </div>
+
+          <div class="contact-details">
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">📍</div>
+              <div class="contact-detail-text">
+                <strong>Dirección</strong>
+                <span>Av. de la Pureza #1234, Col. Centro<br>CP 44100, Guadalajara, Jalisco</span>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">📞</div>
+              <div class="contact-detail-text">
+                <strong>Teléfono</strong>
+                <a href="tel:+528001234567">800-123-4567</a>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">✉️</div>
+              <div class="contact-detail-text">
+                <strong>Email</strong>
+                <a href="mailto:contacto@aquapura.mx">contacto@aquapura.mx</a>
+              </div>
+            </div>
+            <div class="contact-detail-item">
+              <div class="contact-detail-icon">🕐</div>
+              <div class="contact-detail-text">
+                <strong>Horarios</strong>
+                <span>Lun-Sáb: 7:00 AM - 8:00 PM<br>Dom: 8:00 AM - 3:00 PM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form-card reveal">
+          <h3>Envíanos un mensaje</h3>
+          <form id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="contact-name">Nombre completo</label>
+                <input type="text" id="contact-name" name="name" placeholder="Tu nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="contact-phone">Teléfono</label>
+                <input type="tel" id="contact-phone" name="phone" placeholder="Tu teléfono" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contact-email">Correo electrónico</label>
+              <input type="email" id="contact-email" name="email" placeholder="tu@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="contact-service">Servicio de interés</label>
+              <select id="contact-service" name="service" required>
+                <option value="" disabled selected>Selecciona un servicio</option>
+                <option value="hogar">Plan Hogar</option>
+                <option value="empresarial">Plan Empresarial</option>
+                <option value="industrial">Plan Industrial</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="contact-message">Mensaje</label>
+              <textarea id="contact-message" name="message" placeholder="¿En qué podemos ayudarte?" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary form-submit-btn" id="contact-submit">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Enviar Mensaje
+            </button>
+          </form>
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">✓</div>
+            <h4>¡Mensaje enviado!</h4>
+            <p>Nos pondremos en contacto contigo en menos de 24 horas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg viewBox="0 0 36 36" width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="footerLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#0070cc"/>
+                  <stop offset="100%" style="stop-color:#00c49a"/>
+                </linearGradient>
+              </defs>
+              <path d="M18 3L27 15C30 20 28 28 22 31C19.5 32.2 16.5 32.2 14 31C8 28 6 20 9 15L18 3Z" fill="url(#footerLogoGrad)"/>
+            </svg>
+            <span>AquaPura</span>
+          </div>
+          <p>Distribución de agua purificada de la más alta calidad. Tu salud es nuestra prioridad.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook" id="social-facebook">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram" id="social-instagram">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter" id="social-twitter">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube" id="social-youtube">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h4>Servicios</h4>
+          <a href="#servicios">Plan Hogar</a>
+          <a href="#servicios">Plan Empresarial</a>
+          <a href="#servicios">Plan Industrial</a>
+          <a href="#contacto">Cotización</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Empresa</h4>
+          <a href="#nosotros">Sobre Nosotros</a>
+          <a href="#cobertura">Cobertura</a>
+          <a href="#testimonios">Testimonios</a>
+          <a href="#">Blog</a>
+        </div>
+
+        <div class="footer-column">
+          <h4>Soporte</h4>
+          <a href="#contacto">Contacto</a>
+          <a href="#">Preguntas Frecuentes</a>
+          <a href="#">Términos y Condiciones</a>
+          <a href="#">Política de Privacidad</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 AquaPura. Todos los derechos reservados.</p>
+        <p>Hecho con 💧 para ti</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float Button -->
+  <a href="https://wa.me/528001234567?text=Hola,%20me%20interesa%20el%20servicio%20de%20agua%20purificada" 
+     target="_blank" 
+     class="whatsapp-float" 
+     id="whatsapp-btn"
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Volver arriba">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
